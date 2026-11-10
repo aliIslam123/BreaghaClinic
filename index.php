@@ -88,7 +88,7 @@ $depts_booking = $conn->query("SELECT slug, name, icon FROM departments WHERE vi
     <!-- Hero — Editorial Luxury -->
     <header class="hero" id="hero">
         <div class="hero__bg">
-            <img src="assets/imgs/hero-bg.png" alt="" class="hero__img" aria-hidden="true">
+            <img src="assets/imgs/hero-bg.webp" alt="" class="hero__img" aria-hidden="true" width="1672" height="941" fetchpriority="high" decoding="async">
         </div>
         <div class="hero__shade"></div>
         <div class="hero__grain" aria-hidden="true"></div>
