@@ -1,11 +1,15 @@
 # Brèagha Clinic website
 
-PHP website for Brèagha Clinic. The GitHub repository is the source for code updates; Hostinger deployment should target `breaghaclinic.com` from the `main` branch.
+PHP website for Brèagha Clinic.
 
-## Sensitive runtime files
+- GitHub repository: https://github.com/aliIslam123/BreaghaClinic
+- Deployment branch: `main`
+- Hostinger domain: `breaghaclinic.com`
 
-`config/connection.php` and `config/telegram-config.php` contain server credentials and are intentionally excluded from Git. Keep the production copies on Hostinger. Do not commit credentials, session files, logs, cookies, or uploaded customer data.
+## Production configuration
 
-## Deployment
+`config/connection.php` and `config/telegram-config.php` contain production credentials and are intentionally excluded from Git. Keep the production copies safely configured on Hostinger. Before deploying to `public_html`, make sure the live database configuration remains available to the app; Hostinger deployment can replace files in the target directory.
 
-The project is hosted on Hostinger. Connect the private GitHub repository `aliIslam123/BreaghaClinc` in hPanel and enable automatic deployment from `main` to the existing website document root. Keep Hostinger's production database configuration in place when deploying.
+## Automatic deployment
+
+In Hostinger hPanel, connect this GitHub repository under **Websites → breaghaclinic.com → Advanced → Git**, choose `main`, and deploy to `public_html`. After the first deployment, pushes to `main` can trigger automatic deployment.
