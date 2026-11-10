@@ -348,6 +348,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_offer'])) {
     $new_cat = sanitize_input($_POST['new_category'] ?? '');
     $name = sanitize_input($_POST['name'] ?? '');
     $price = (float)($_POST['price'] ?? 0);
+    $original_price = trim((string)($_POST['original_price'] ?? '')) !== '' ? (float)$_POST['original_price'] : null;
+    $details = sanitize_input($_POST['details'] ?? '');
+    $gift_label = sanitize_input($_POST['gift_label'] ?? '');
     $starting = isset($_POST['starting']) ? 1 : 0;
 
     if (!empty($new_cat)) $category = $new_cat;
@@ -356,8 +359,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_offer'])) {
         $msg = '❌ الرجاء إدخال اسم السعر صحيح';
         $msg_type = 'error';
     } else {
-        $stmt = $conn->prepare("INSERT INTO offers (category, name, price, `starting`) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssdi", $category, $name, $price, $starting);
+        $stmt = $conn->prepare("INSERT INTO offers (category, name, details, price, original_price, gift_label, `starting`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssddsi", $category, $name, $details, $price, $original_price, $gift_label, $starting);
         if ($stmt->execute()) {
             $msg = '✅ تم إضافة العرض بنجاح';
         } else {
@@ -374,13 +377,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_offer'])) {
     $new_cat = sanitize_input($_POST['new_category'] ?? '');
     $name = sanitize_input($_POST['name'] ?? '');
     $price = (float)($_POST['price'] ?? 0);
+    $original_price = trim((string)($_POST['original_price'] ?? '')) !== '' ? (float)$_POST['original_price'] : null;
+    $details = sanitize_input($_POST['details'] ?? '');
+    $gift_label = sanitize_input($_POST['gift_label'] ?? '');
     $starting = isset($_POST['starting']) ? 1 : 0;
 
     if (!empty($new_cat)) $category = $new_cat;
 
     if ($id && !empty($name) && $price > 0) {
-        $stmt = $conn->prepare("UPDATE offers SET category=?, name=?, price=?, `starting`=? WHERE id=?");
-        $stmt->bind_param("ssdii", $category, $name, $price, $starting, $id);
+        $stmt = $conn->prepare("UPDATE offers SET category=?, name=?, details=?, price=?, original_price=?, gift_label=?, `starting`=? WHERE id=?");
+        $stmt->bind_param("sssddsii", $category, $name, $details, $price, $original_price, $gift_label, $starting, $id);
         $stmt->execute();
         $msg = '✅ تم تعديل العرض بنجاح';
     }
@@ -1400,8 +1406,9 @@ while ($c = $offer_cats->fetch_assoc()) {
                                 <th>#</th>
                                 <th>القسم</th>
                                 <th>الاسم</th>
+                                <th>تفاصيل الباقة</th>
                                 <th>السعر</th>
-                                <th>سعر يبدأ من</th>
+                                <th>السعر السابق</th>
                                 <th>الإجراءات</th>
                             </tr>
                         </thead>
@@ -1411,8 +1418,9 @@ while ($c = $offer_cats->fetch_assoc()) {
                                     <td><?= $i++ ?></td>
                                     <td><?= htmlspecialchars($o['category'], ENT_QUOTES, 'UTF-8') ?></td>
                                     <td><?= htmlspecialchars($o['name'], ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= htmlspecialchars(trim(($o['details'] ?? '') . (!empty($o['gift_label']) ? ' ' . $o['gift_label'] : '')), ENT_QUOTES, 'UTF-8') ?: '—' ?></td>
                                     <td><?= number_format($o['price'], 0) ?> ج.م</td>
-                                    <td><?= $o['starting'] ? '✅' : '—' ?></td>
+                                    <td><?= !empty($o['original_price']) ? number_format($o['original_price'], 0) . ' ج.م' : '—' ?></td>
                                     <td class="actions-cell">
                                         <a href="dashboard.php?page=edit_offer&id=<?= $o['id'] ?>" class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i> تعديل</a>
                                         <a href="dashboard.php?delete_offer=<?= $o['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('هل أنت متأكد من حذف هذا العرض؟')"><i class="fas fa-trash"></i> حذف</a>
@@ -1461,6 +1469,18 @@ while ($c = $offer_cats->fetch_assoc()) {
                         <div class="form-group">
                             <label>السعر (ج.م) <span class="req">*</span></label>
                             <input type="number" name="price" class="form-control" placeholder="مثال: 1000" min="1" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>السعر قبل العرض (اختياري)</label>
+                            <input type="number" name="original_price" class="form-control" placeholder="اتركه فارغًا إن لم يوجد" min="0.01" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>تفاصيل العرض أو عدد الجلسات (اختياري)</label>
+                            <textarea name="details" class="form-control" rows="2" maxlength="500" placeholder="مثال: جلستان لإنبات الشعر"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>جلسة هدية (اختياري)</label>
+                            <input type="text" name="gift_label" class="form-control" maxlength="120" placeholder="مثال: + جلسة هدية">
                         </div>
                         <div class="form-group">
                             <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
@@ -1520,6 +1540,18 @@ while ($c = $offer_cats->fetch_assoc()) {
                         <div class="form-group">
                             <label>السعر (ج.م) <span class="req">*</span></label>
                             <input type="number" name="price" class="form-control" value="<?= htmlspecialchars($eo['price'], ENT_QUOTES, 'UTF-8') ?>" min="1" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>السعر قبل العرض (اختياري)</label>
+                            <input type="number" name="original_price" class="form-control" value="<?= $eo['original_price'] !== null ? htmlspecialchars($eo['original_price'], ENT_QUOTES, 'UTF-8') : '' ?>" min="0.01" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label>تفاصيل العرض أو عدد الجلسات (اختياري)</label>
+                            <textarea name="details" class="form-control" rows="2" maxlength="500"><?= htmlspecialchars($eo['details'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>جلسة هدية (اختياري)</label>
+                            <input type="text" name="gift_label" class="form-control" value="<?= htmlspecialchars($eo['gift_label'] ?? '', ENT_QUOTES, 'UTF-8') ?>" maxlength="120" placeholder="مثال: + جلسة هدية">
                         </div>
                         <div class="form-group">
                             <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">

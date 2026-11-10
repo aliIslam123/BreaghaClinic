@@ -52,7 +52,7 @@ header('Content-Type: text/html; charset=utf-8');
   <?php
   require_once 'config/connection.php';
   // Load offers from DB
-  $offers_result = $conn->query("SELECT * FROM offers WHERE visible = 1 ORDER BY category, id ASC");
+  $offers_result = $conn->query("SELECT id, category, name, price, starting, original_price, details, gift_label FROM offers WHERE visible = 1 ORDER BY category, id ASC");
   $offers = [];
   while ($o = $offers_result->fetch_assoc()) {
       $offers[] = $o;
@@ -66,6 +66,9 @@ header('Content-Type: text/html; charset=utf-8');
           'name' => $o['name'],
           'price' => (float)$o['price'],
           'starting' => (bool)$o['starting'],
+          'originalPrice' => $o['original_price'] !== null ? (float)$o['original_price'] : null,
+          'details' => $o['details'] ?? '',
+          'giftLabel' => $o['gift_label'] ?? '',
       ];
     }
   ?>
@@ -101,7 +104,9 @@ header('Content-Type: text/html; charset=utf-8');
     // === بيانات العروض من قاعدة البيانات ===
     const services = <?= json_encode($offers_json, JSON_UNESCAPED_UNICODE) ?>;
 
-    function oldPrice(p) { return Math.round(p * 1.2 / 10) * 10; }
+    function formatPrice(p) {
+      return new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(p);
+    }
 
     const categories = ['الكل', ...new Set(services.map(s => s.cat))];
     const filtersEl = document.getElementById('filters');
@@ -136,12 +141,37 @@ header('Content-Type: text/html; charset=utf-8');
 
         const head = document.createElement('div');
         head.className = 'offer-card-head';
-        head.innerHTML = `<div class="offer-name">${s.name}</div><div class="offer-tag">${s.cat}</div>`;
+        const offerName = document.createElement('div');
+        offerName.className = 'offer-name';
+        offerName.textContent = s.name;
+        const offerTag = document.createElement('div');
+        offerTag.className = 'offer-tag';
+        offerTag.textContent = s.cat;
+        head.append(offerName, offerTag);
+
+        let description = null;
+        if (s.details || s.giftLabel) {
+          description = document.createElement('div');
+          description.className = 'offer-details';
+          if (s.details) {
+            const detailText = document.createElement('p');
+            detailText.textContent = s.details;
+            description.appendChild(detailText);
+          }
+          if (s.giftLabel) {
+            const gift = document.createElement('span');
+            gift.className = 'offer-gift';
+            gift.textContent = s.giftLabel;
+            description.appendChild(gift);
+          }
+        }
 
         const priceSec = document.createElement('div');
         priceSec.className = 'offer-price-section';
-        const priceHTML = s.starting ? `ابتداءً من ${s.price} ج.م` : `${s.price} ج.م`;
-        const oldHTML = s.starting ? '' : `<span class='offer-old-price'>${oldPrice(s.price)} ج.م</span>`;
+        const priceHTML = `${s.starting ? 'ابتداءً من ' : ''}${formatPrice(s.price)} ج.م`;
+        const oldHTML = s.originalPrice !== null && s.originalPrice > 0
+          ? `<span class='offer-old-price'>${formatPrice(s.originalPrice)} ج.م</span>`
+          : '';
         priceSec.innerHTML = `<div class='offer-price'>${priceHTML}</div>${oldHTML}`;
 
         const divider = document.createElement('div');
@@ -153,9 +183,12 @@ header('Content-Type: text/html; charset=utf-8');
 
         book.addEventListener('click', () => {
           const categorySlugMap = {
+              'العناية بالبشرة': 'derma',
+              'العناية بالشعر': 'derma',
               'ليزر': 'laser',
               'الليزر': 'laser',
               'تقشير': 'derma',
+              'التجميل بالحقن': 'cosm',
               'الجلدية وعلاجات الجلدية': 'derma',
               'الجلدية وعلاجات البشرة': 'derma',
               'فيلر': 'cosm',
@@ -174,6 +207,7 @@ header('Content-Type: text/html; charset=utf-8');
 
         card.appendChild(accent);
         card.appendChild(head);
+        if (description) card.appendChild(description);
         card.appendChild(priceSec);
         card.appendChild(divider);
         card.appendChild(actions);

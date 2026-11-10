@@ -326,6 +326,9 @@ $dept_bf = $conn->query("SELECT slug, name, icon FROM departments WHERE visible 
       
       // Category map to department slugs
       const categoryMap = {
+        'العناية بالبشرة': 'derma',
+        'العناية بالشعر': 'derma',
+        'التجميل بالحقن': 'cosm',
         'الليزر': 'laser',
         'الإجراءات التجميلية': 'cosm',
         'الجلدية وعلاجات الجلدية': 'derma',
