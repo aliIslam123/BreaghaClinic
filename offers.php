@@ -52,7 +52,7 @@ header('Content-Type: text/html; charset=utf-8');
   <?php
   require_once 'config/connection.php';
   // Load offers from DB
-  $offers_result = $conn->query("SELECT id, category, name, price, starting, original_price, details, gift_label FROM offers WHERE visible = 1 ORDER BY category, id ASC");
+  $offers_result = $conn->query("SELECT id, category, name, price, `starting`, original_price, details, gift_label FROM offers WHERE visible = 1 ORDER BY category, id ASC");
   $offers = [];
   while ($o = $offers_result->fetch_assoc()) {
       $offers[] = $o;
