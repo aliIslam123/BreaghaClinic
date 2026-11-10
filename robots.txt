@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /config/
+Disallow: /api/
+Disallow: /logs/
+Disallow: /sessions/
+Disallow: /scratch/
+Disallow: /vendor/
+Disallow: /PHPMailer/
+
+Sitemap: https://breaghaclinic.com/sitemap.xml

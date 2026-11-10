@@ -1,0 +1,28 @@
+# Runtime secrets and local configuration
+/config/connection.php
+/config/connection.local.php
+/config/telegram-config.php
+/.env
+/.env.*
+!.env.example
+
+# Runtime and user-generated data
+/sessions/
+/logs/
+/tmp_upload/
+/uploads/*
+!/uploads/services/
+!/uploads/services/**
+/cookies.txt
+
+# Local tools and generated files
+/.vscode/
+/scratch/
+/composer.phar
+/vendor/
+/test-*.php
+/check_db.php
+/curl-test.php
+/FETCH_HEAD
+/git
+/main

@@ -1,0 +1,474 @@
+/* ================================================
+   ENHANCED BOOKING SECTION - Brèagha Clinic
+   Professional, conversion-focused design
+   ================================================ */
+
+.booking-section-enhanced {
+    position: relative;
+    padding: 80px 5%;
+    background: linear-gradient(135deg, #fefdfb 0%, #fff9f0 100%);
+    overflow: hidden;
+}
+
+.booking-container-enhanced {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+/* ─── Booking Content Section ─── */
+.booking-content {
+    padding: 0 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.booking-content h2 {
+    font-size: 2.4rem;
+    color: #333;
+    margin-bottom: 12px;
+    font-weight: 800;
+}
+
+.booking-content h2 span {
+    color: #C39E31;
+}
+
+.booking-tagline {
+    font-size: 1.1rem;
+    color: #C39E31;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+/* ─── Benefits List ─── */
+.booking-benefits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, rgba(195, 158, 49, 0.05), rgba(195, 158, 49, 0.02));
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid rgba(195, 158, 49, 0.1);
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+.benefit-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: #C39E31;
+    color: #fff;
+    border-radius: 50%;
+    flex-shrink: 0;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.benefit-text {
+    color: #333;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* ─── Booking Form Container ─── */
+.booking-form-container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e8d49a;
+}
+
+.booking-form-container form {
+    margin: 0;
+}
+
+/* ─── Booking Visual Section ─── */
+.booking-visual {
+    position: relative;
+}
+
+.booking-image-wrapper {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.booking-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 20px;
+    transition: transform 0.3s ease;
+}
+
+.booking-image-wrapper:hover .booking-image {
+    transform: scale(1.02);
+}
+
+/* ─── Booking Badge ─── */
+.booking-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #C39E31, #a38227);
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 50px;
+    box-shadow: 0 8px 20px rgba(195, 158, 49, 0.3);
+    text-align: center;
+    backdrop-filter: blur(10px);
+    animation: floatBadge 3s ease-in-out infinite;
+}
+
+.badge-text {
+    display: block;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.badge-rating {
+    display: block;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    letter-spacing: 2px;
+}
+
+@keyframes floatBadge {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* ─── Quick Booking Section ─── */
+.quick-booking-section {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 2px solid rgba(195, 158, 49, 0.1);
+}
+
+.quick-booking-section h3 {
+    color: #333;
+    font-size: 1.3rem;
+    margin-bottom: 24px;
+    font-weight: 700;
+}
+
+.quick-booking-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.quick-book-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(135deg, #C39E31, #a38227);
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(195, 158, 49, 0.2);
+}
+
+.quick-book-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(195, 158, 49, 0.3);
+}
+
+.quick-book-btn:active {
+    transform: translateY(-1px);
+}
+
+.quick-book-btn.whatsapp-btn {
+    background: linear-gradient(135deg, #25d366, #20ba5a);
+    box-shadow: 0 6px 16px rgba(37, 211, 102, 0.2);
+}
+
+.quick-book-btn.whatsapp-btn:hover {
+    box-shadow: 0 10px 24px rgba(37, 211, 102, 0.3);
+}
+
+.btn-icon {
+    font-size: 1.2rem;
+}
+
+.btn-text {
+    font-weight: 700;
+}
+
+/* ─── Navigation Book Button Style ─── */
+.nav-book-btn {
+    background: linear-gradient(135deg, #C39E31, #a38227) !important;
+    color: #fff !important;
+    padding: 8px 18px !important;
+    border-radius: 20px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 12px rgba(195, 158, 49, 0.3) !important;
+}
+
+.nav-book-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 16px rgba(195, 158, 49, 0.4) !important;
+}
+
+/* ─── Form Overrides ─── */
+.booking-form-container form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.booking-form-container form label {
+    font-weight: 700;
+    color: #333;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+}
+
+.booking-form-container form input,
+.booking-form-container form select {
+    padding: 11px 14px;
+    border: 2px solid #e8d49a;
+    border-radius: 10px;
+    background: #faf9f6;
+    font-family: 'Cairo', sans-serif;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.booking-form-container form input:focus,
+.booking-form-container form select:focus {
+    border-color: #C39E31;
+    box-shadow: 0 0 12px rgba(195, 158, 49, 0.2);
+    outline: none;
+    background: #fff;
+}
+
+.booking-form-container button {
+    grid-column: span 2;
+    padding: 14px;
+    background: linear-gradient(135deg, #C39E31, #a38227);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 16px rgba(195, 158, 49, 0.2);
+    font-family: 'Cairo', sans-serif;
+}
+
+.booking-form-container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(195, 158, 49, 0.3);
+}
+
+.booking-form-container button:active {
+    transform: translateY(0);
+}
+
+/* ─── Mobile Responsiveness ─── */
+@media (max-width: 1024px) {
+    .booking-container-enhanced {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .booking-content {
+        padding: 0;
+    }
+
+    .booking-content h2 {
+        font-size: 2rem;
+    }
+
+    .booking-benefits {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .booking-form-container form {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-form-container button {
+        grid-column: span 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .booking-section-enhanced {
+        padding: 60px 4%;
+    }
+
+    .booking-content h2 {
+        font-size: 1.6rem;
+    }
+
+    .booking-tagline {
+        font-size: 1rem;
+    }
+
+    .booking-benefits {
+        padding: 16px;
+        gap: 10px;
+    }
+
+    .benefit-item {
+        gap: 10px;
+        padding: 8px 0;
+    }
+
+    .benefit-text {
+        font-size: 0.9rem;
+    }
+
+    .booking-form-container {
+        padding: 20px;
+    }
+
+    .quick-booking-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .quick-book-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .booking-section-enhanced {
+        padding: 40px 3%;
+    }
+
+    .booking-content h2 {
+        font-size: 1.4rem;
+    }
+
+    .booking-tagline {
+        font-size: 0.95rem;
+    }
+
+    .booking-benefits {
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .benefit-item {
+        padding: 6px 0;
+    }
+
+    .benefit-text {
+        font-size: 0.85rem;
+    }
+
+    .booking-form-container {
+        padding: 16px;
+    }
+
+    .booking-form-container form {
+        gap: 12px;
+    }
+
+    .booking-form-container form input,
+    .booking-form-container form select {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+
+    .booking-form-container button {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+
+    .quick-book-btn {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+
+    .btn-icon {
+        font-size: 1rem;
+    }
+}
+
+/* ─── Animation on scroll ─── */
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.booking-content {
+    animation: slideInFromLeft 0.6s ease-out;
+}
+
+.booking-visual {
+    animation: slideInFromRight 0.6s ease-out;
+}
+
+/* ─── Loading state for booking buttons ─── */
+.booking-form-container button.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.booking-form-container button.loading::after {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 0.8s linear infinite;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

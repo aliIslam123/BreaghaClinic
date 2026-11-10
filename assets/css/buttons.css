@@ -1,0 +1,22 @@
+/* .extra-btn, .login-btn {
+  background: var(--primary-gradient);
+  border: none;
+  padding: 12px;
+  border-radius: 35px;
+  width: 32%;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease;
+  margin-top: 10px;
+  margin-right: 100px;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+}
+
+.extra-btn, .login-btn{
+  transform: translateY(-2px);
+  background: var(--primary-dark);
+}
+ */

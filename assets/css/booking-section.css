@@ -1,0 +1,593 @@
+/* ================================================================
+   booking-section.css
+   Complete Booking Section + Inline Form Styles
+   Brèagha Clinic — preserves brand identity (gold #C39E31, Cairo)
+================================================================ */
+
+/* ── Section Wrapper ───────────────────────────────────────── */
+.booking-section-enhanced {
+    padding: 80px 0 100px;
+    background: linear-gradient(160deg, #fefdfb 0%, #faf8f0 60%, #fef9ea 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.booking-section-enhanced::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(195,158,49,.10) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.booking-section-enhanced::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    left: -80px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(195,158,49,.07) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* Highlight pulse when scrolled to */
+.booking-section-enhanced.booking-highlight {
+    animation: sectionPulse .8s ease;
+}
+
+@keyframes sectionPulse {
+    0%   { box-shadow: inset 0 0 0 4px rgba(195,158,49,0); }
+    40%  { box-shadow: inset 0 0 0 4px rgba(195,158,49,.45); }
+    100% { box-shadow: inset 0 0 0 4px rgba(195,158,49,0); }
+}
+
+/* ── Two-Column Layout ─────────────────────────────────────── */
+.booking-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.55fr;
+    gap: 60px;
+    align-items: start;
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 28px;
+}
+
+/* ── Left Panel (Info) ─────────────────────────────────────── */
+.booking-info-panel h2 {
+    font-size: 2.2rem;
+    color: #C39E31;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+.booking-tagline {
+    color: #777;
+    font-size: 1rem;
+    margin-bottom: 36px;
+    line-height: 1.7;
+}
+
+.booking-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 40px;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid #f0ece0;
+    border-radius: 12px;
+    padding: 13px 16px;
+    transition: box-shadow .22s;
+}
+
+.benefit-item:hover {
+    box-shadow: 0 4px 18px rgba(195,158,49,.12);
+}
+
+.benefit-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #C39E31, #e6bc57);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .9rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.benefit-text {
+    color: #444;
+    font-size: .95rem;
+    font-weight: 600;
+}
+
+.booking-whatsapp-alt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: #fff;
+    text-decoration: none;
+    padding: 13px 22px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: .95rem;
+    transition: transform .22s, box-shadow .22s;
+    width: fit-content;
+}
+
+.booking-whatsapp-alt:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(37,211,102,.3);
+    color: #fff;
+}
+
+/* ── Form Card ─────────────────────────────────────────────── */
+.booking-form-card {
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 16px 60px rgba(0,0,0,.09);
+    border-top: 5px solid #C39E31;
+    padding: 40px 36px 44px;
+    position: relative;
+    z-index: 1;
+}
+
+.booking-form-card h3 {
+    color: #333;
+    font-size: 1.4rem;
+    margin-bottom: 28px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.booking-form-card h3 span {
+    color: #C39E31;
+}
+
+/* ── Form Groups ───────────────────────────────────────────── */
+.bf-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.bf-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.bf-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.bf-group label {
+    font-size: .88rem;
+    font-weight: 700;
+    color: #555;
+    padding-right: 2px;
+}
+
+.bf-group label .req {
+    color: #C39E31;
+    margin-right: 2px;
+}
+
+.bf-group input,
+.bf-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e8e0cc;
+    border-radius: 12px;
+    background: #fafaf8;
+    font-family: 'Cairo', sans-serif;
+    font-size: .95rem;
+    color: #333;
+    transition: border-color .22s, box-shadow .22s, background .22s;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.bf-group input:focus,
+.bf-group select:focus {
+    border-color: #C39E31;
+    box-shadow: 0 0 0 3px rgba(195,158,49,.15);
+    background: #fff;
+    outline: none;
+}
+
+.bf-group input.error,
+.bf-group select.error {
+    border-color: #e74c3c;
+    box-shadow: 0 0 0 3px rgba(231,76,60,.12);
+}
+
+.bf-group input::placeholder { color: #bbb; }
+
+.bf-group select:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+    background: #f5f5f2;
+}
+
+/* Select arrow */
+.select-wrap {
+    position: relative;
+}
+
+.select-wrap::after {
+    content: '▾';
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #C39E31;
+    pointer-events: none;
+    font-size: .9rem;
+}
+
+/* ── Error Message ─────────────────────────────────────────── */
+.bf-error {
+    font-size: .8rem;
+    color: #e74c3c;
+    min-height: 18px;
+    padding-right: 2px;
+    display: none;
+}
+
+.bf-error.visible {
+    display: block;
+    animation: errorSlide .25s ease;
+}
+
+@keyframes errorSlide {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Sessions Field (Laser Only) ───────────────────────────── */
+.sessions-field-wrapper {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height .35s ease, opacity .25s ease, margin .3s ease;
+    margin-bottom: 0;
+}
+
+.sessions-field-wrapper.visible {
+    max-height: 120px;
+    opacity: 1;
+    margin-bottom: 18px;
+}
+
+/* ── Submit Button ─────────────────────────────────────────── */
+.bf-submit-wrap {
+    margin-top: 28px;
+}
+
+.bf-submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #C39E31, #e6bc57);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform .22s, box-shadow .22s;
+    letter-spacing: .02em;
+}
+
+.bf-submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 36px rgba(195,158,49,.35);
+}
+
+.bf-submit-btn:disabled {
+    opacity: .7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.bf-submit-btn .btn-text { transition: opacity .2s; }
+
+.bf-submit-btn .btn-loader {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity .2s;
+}
+
+.bf-submit-btn.loading .btn-text  { opacity: 0; }
+.bf-submit-btn.loading .btn-loader { opacity: 1; }
+.bf-submit-btn.loading            { pointer-events: none; }
+
+/* Spinner */
+.spin-ring {
+    width: 22px;
+    height: 22px;
+    border: 3px solid rgba(255,255,255,.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ── Global Alert Banner ───────────────────────────────────── */
+.bf-global-alert {
+    display: none;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: .92rem;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+    animation: fadeAlert .3s ease;
+}
+
+@keyframes fadeAlert {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.bf-global-alert.alert-error {
+    display: block;
+    background: #fff0f0;
+    border: 1.5px solid #f5c6cb;
+    color: #c0392b;
+}
+
+.bf-global-alert.alert-success {
+    display: block;
+    background: linear-gradient(135deg, #f0fff4, #e6fef0);
+    border: 1.5px solid #a8e6b6;
+    color: #1e6e38;
+}
+
+/* ── Success Card & Invoice ──────────────────────────────────── */
+.bf-success-card {
+    display: none;
+    text-align: center;
+    padding: 20px 10px 10px;
+    animation: fadeAlert .4s ease;
+}
+
+.bf-success-card.show { display: block; }
+
+.success-svg-wrap {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 18px;
+}
+
+.success-svg-wrap svg { width: 100%; height: 100%; }
+
+.checkmark-circle { stroke: #C39E31; fill: none; }
+.checkmark-path   { stroke: #C39E31; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+.bf-success-card h3 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+}
+
+.invoice-container {
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle watermark inside invoice */
+.invoice-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 250px;
+    height: 250px;
+    transform: translate(-50%, -50%);
+    background: url('../imgs/Brèagha - English Logo.svg') no-repeat center;
+    background-size: contain;
+    opacity: 0.03;
+    pointer-events: none;
+}
+
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px dashed #eee;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.invoice-status {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #555;
+}
+
+.status-pending {
+    color: #e67e22;
+    background: #fdf3e8;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.bf-success-id {
+    background: linear-gradient(135deg,rgba(195,158,49,.12),rgba(195,158,49,.06));
+    border: 1px solid #e8d49a;
+    color: #7a5c00;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: .95rem;
+    font-weight: 700;
+}
+
+.invoice-footer-logo {
+    text-align: center;
+    color: #C39E31;
+    font-weight: 800;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    font-family: 'Cairo', sans-serif;
+}
+
+.bf-summary-table {
+    width: 100%;
+    text-align: right;
+    border-collapse: collapse;
+    font-size: .9rem;
+    margin-bottom: 24px;
+}
+
+.bf-summary-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #f5efe0;
+}
+
+.bf-summary-table td:first-child {
+    font-weight: 700;
+    color: #777;
+    width: 40%;
+}
+
+.bf-summary-table td:last-child { color: #333; font-weight: 600; }
+
+.bf-success-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.bf-download-btn {
+    background: #fff;
+    color: #444;
+    border: 2px solid #ddd;
+    padding: 11px 24px;
+    border-radius: 25px;
+    font-family: 'Cairo', sans-serif;
+    font-size: .95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .22s;
+}
+
+.bf-download-btn:hover {
+    border-color: #bbb;
+    background: #f9f9f9;
+}
+
+.bf-new-booking-btn {
+    background: transparent;
+    color: #C39E31;
+    border: 2px solid #C39E31;
+    padding: 11px 24px;
+    border-radius: 25px;
+    font-family: 'Cairo', sans-serif;
+    font-size: .95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .22s;
+}
+
+.bf-new-booking-btn:hover {
+    background: #C39E31;
+    color: #fff;
+}
+
+.bf-whatsapp-btn {
+    background: linear-gradient(135deg,#25D366,#128C7E);
+    color: #fff;
+    border: none;
+    padding: 11px 24px;
+    border-radius: 25px;
+    font-family: 'Cairo', sans-serif;
+    font-size: .95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .22s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.bf-whatsapp-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(37,211,102,.3);
+    color: #fff;
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 900px) {
+    .booking-layout {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding: 0 20px;
+    }
+
+    .booking-info-panel {
+        text-align: center;
+    }
+
+    .booking-benefits {
+        align-items: center;
+    }
+
+    .benefit-item { max-width: 420px; }
+
+    .booking-whatsapp-alt { margin: 0 auto; }
+}
+
+@media (max-width: 600px) {
+    .booking-section-enhanced { padding: 50px 0 70px; }
+
+    .booking-form-card {
+        padding: 28px 20px 32px;
+        border-radius: 18px;
+    }
+
+    .bf-row {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+}
+
+@media (max-width: 400px) {
+    .booking-form-card { padding: 22px 14px 26px; }
+}

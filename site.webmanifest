@@ -1,0 +1,20 @@
+{
+    "name": "Brèagha Clinic - عيادة براجيا",
+    "short_name": "Brèagha",
+    "description": "عيادة براجيا للتجميل والليزر في العبور",
+    "icons": [
+        {
+            "src": "assets/imgs/Brèagha - Logomark.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#C39E31",
+    "orientation": "portrait",
+    "lang": "ar",
+    "dir": "rtl"
+}

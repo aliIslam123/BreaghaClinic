@@ -1,0 +1,110 @@
+/* ================================
+   FORM BOOKING - Brèagha Clinic
+================================ */
+
+.booking-container {
+  max-width: 800px;
+  margin: 100px auto;
+  padding: 50px 40px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  border-top: 6px solid  #C39E31;
+  transition: all 0.3s ease-in-out;
+  align-items: center;
+}
+
+.booking-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+.booking-container h2 {
+  text-align: center;
+  color:  #C39E31
+;
+  margin-bottom: 25px;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.booking-container p {
+  text-align: center;
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 1rem;
+}
+
+/* ================================
+   FORM ELEMENTS
+================================ */
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 25px;
+}
+
+form label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+
+form input,
+form select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #faf9f6;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  font-size: 1rem;
+}
+
+form input:focus,
+form select:focus {
+  border-color:  #C39E31;
+  box-shadow: 0 0 8px rgba(165,139,111,0.3);
+  outline: none;
+}
+
+/* ================================
+   SUBMIT BUTTON
+================================ */
+button {
+  grid-column: span 2;
+  background-color:  #C39E31;
+  color: #fff;
+  border: none;
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color:  #C39E31;
+  transform: translateY(-2px);
+}
+
+/* ================================
+   RESPONSIVE DESIGN
+================================ */
+@media (max-width: 768px) {
+  .booking-container {
+    padding: 35px 25px;
+  }
+
+  form {
+    grid-template-columns: 1fr;
+  }
+
+  button {
+    grid-column: span 1;
+  }
+}

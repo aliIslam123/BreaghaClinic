@@ -1,0 +1,161 @@
+# =============================================================================
+# .htaccess — Breagha Clinic (breaghaclinic.com)
+# =============================================================================
+
+# ----------------------------------------------------------------------
+# 1. Custom Error Documents
+# ----------------------------------------------------------------------
+ErrorDocument 404 /404.php
+
+# ----------------------------------------------------------------------
+# 2. Security Headers
+# ----------------------------------------------------------------------
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "camera=(), microphone=(), geolocation=(self)"
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://cdnjs.cloudflare.com https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://unpkg.com https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://wa.me https://api.whatsapp.com; frame-src https://www.google.com;"
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 3. Protection & Access Controls
+# ----------------------------------------------------------------------
+
+# Prevent directory listings
+Options -Indexes
+
+# Prevent access to hidden files and directories (dotfiles)
+<FilesMatch "^\.">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Block access to sensitive file extensions
+<FilesMatch "\.(sql|bak|log|ini|sh|env|json|lock)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# ----------------------------------------------------------------------
+# 4. Rewrite Rules (single engine block)
+# ----------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # On Hostinger (production): / — On localhost subfolder: "/Breagha project/"
+    RewriteBase /
+
+    # --- Block access to protected folders ---
+    RewriteRule ^(config|logs|backups|vendor)(/|$) - [F,L]
+
+    # --- 301 Redirects: old .php URLs → clean URLs ---
+    RewriteCond %{THE_REQUEST} \s/dashboard\.php[\s?] [NC]
+    RewriteRule ^dashboard\.php$ /admin/dashboard.php [R=301,L]
+
+    RewriteCond %{THE_REQUEST} \s/login\.php[\s?] [NC]
+    RewriteRule ^login\.php$ /admin/login.php [R=301,L]
+
+    RewriteCond %{THE_REQUEST} \s/aboutus\.php[\s?] [NC]
+    RewriteRule ^aboutus\.php$ /about [R=301,L]
+
+    RewriteCond %{THE_REQUEST} \s/services\.php[\s?] [NC]
+    RewriteRule ^services\.php$ /services [R=301,L]
+
+    RewriteCond %{THE_REQUEST} \s/offers\.php[\s?] [NC]
+    RewriteRule ^offers\.php$ /offers [R=301,L]
+
+    RewriteCond %{THE_REQUEST} \s/bookingform\.php[\s?] [NC]
+    RewriteRule ^bookingform\.php$ /booking [R=301,L]
+
+    RewriteCond %{THE_REQUEST} \s/index\.php[\s?] [NC]
+    RewriteRule ^index\.php$ / [R=301,L]
+
+    # --- Clean URLs (internal rewrites, no redirect) ---
+    RewriteRule ^about/?$ aboutus.php [L,QSA]
+    RewriteRule ^services/?$ services.php [L,QSA]
+    RewriteRule ^offers/?$ offers.php [L,QSA]
+    RewriteRule ^booking/?$ bookingform.php [L,QSA]
+
+    # --- Sitemap: serve dynamic sitemap.php ---
+    RewriteRule ^sitemap\.xml$ sitemap.php [L]
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 5. HTTP Assets Compression (GZIP) via mod_deflate
+# ----------------------------------------------------------------------
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/x-font-ttf
+    AddOutputFilterByType DEFLATE application/x-font-otf
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE image/x-icon
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 6. Browser Caching Policies via mod_expires
+# ----------------------------------------------------------------------
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+
+    # Stylesheets & Scripts
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType application/x-javascript "access plus 1 year"
+
+    # Image formats
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+
+    # Media Content (Videos & Audios)
+    ExpiresByType video/mp4 "access plus 1 year"
+    ExpiresByType video/webm "access plus 1 year"
+    ExpiresByType video/ogg "access plus 1 year"
+
+    # Web Fonts
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/x-font-ttf "access plus 1 year"
+    ExpiresByType application/x-font-woff "access plus 1 year"
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 7. Media MIME Types & Streaming Support
+# ----------------------------------------------------------------------
+<IfModule mod_mime.c>
+    AddType video/mp4 .mp4
+    AddType video/webm .webm
+    AddType video/ogg .ogv
+    AddType video/ogg .ogg
+</IfModule>

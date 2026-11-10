@@ -1,0 +1,514 @@
+:root {
+  --gold: #C39E31;
+  --gold-dark: #a38227;
+  --gold-gradient: linear-gradient(135deg, #C39E31 0%, #E6BC57 100%);
+  --bg: #faf9f7;
+  --text: #222;
+  --muted-text: #666;
+  --white: #ffffff;
+  --radius: 16px;
+  --shadow: 0 10px 30px rgba(16, 24, 40, 0.08);
+  --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+/* 🎥 Hero Section */
+.hero {
+  position: relative;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--white);
+  text-align: center;
+  overflow: hidden;
+}
+
+.bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  filter: brightness(60%) saturate(110%);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(to top, var(--bg) 10%, transparent);
+  z-index: -1;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: -1;
+}
+
+.hero-text h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin-bottom: 15px;
+}
+
+.hero-text p {
+  color: #fff;
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════
+   🗂️ LUXURY DEPARTMENT TABS
+═══════════════════════════════════ */
+.dept-tabs-wrapper {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(195, 158, 49, 0.1);
+  position: sticky;
+  top: 70px;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.dept-tabs-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
+.dept-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.dept-tab {
+  background: #fff;
+  border: 1px solid rgba(195, 158, 49, 0.2);
+  color: var(--muted-text);
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.dept-tab:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 6px 15px rgba(195, 158, 49, 0.15);
+}
+
+.dept-tab.active {
+  background: var(--gold-gradient);
+  border-color: var(--gold);
+  color: #fff !important;
+  box-shadow: 0 8px 25px rgba(195, 158, 49, 0.35);
+}
+
+.tab-icon {
+  font-size: 1.2rem;
+}
+
+/* ═══════════════════════════════════
+   📋 SCHEDULE SHEET
+═══════════════════════════════════ */
+.schedule-sheet {
+  max-width: 1200px;
+  margin: 30px auto 0;
+  padding: 0 20px;
+}
+
+.schedule-toggle {
+  width: 100%;
+  background: #fff;
+  border: 1px solid rgba(195, 158, 49, 0.25);
+  border-radius: 15px;
+  padding: 16px 24px;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+}
+
+.schedule-toggle:hover {
+  background: #fdfaf3;
+  border-color: var(--gold);
+}
+
+.toggle-icon {
+  transition: transform 0.4s ease;
+  color: var(--gold);
+}
+
+.schedule-sheet.open .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.schedule-content {
+  display: none;
+  padding: 25px 0 15px;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.schedule-sheet.open .schedule-content {
+  display: block;
+}
+
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.sched-item {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  border-top: 5px solid var(--gold);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  transition: var(--transition);
+}
+
+.sched-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.sched-item h4 {
+  color: var(--gold-dark);
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 8px;
+}
+
+.sched-item p {
+  color: var(--muted-text);
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sched-doctor {
+  color: var(--gold) !important;
+  font-weight: 700 !important;
+  margin-top: 10px !important;
+  background: #fdf8ed;
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: inline-block !important;
+}
+
+/* ═══════════════════════════════════
+   🏥 LUXURY DEPARTMENT HEADERS
+═══════════════════════════════════ */
+.dept-section {
+  display: none;
+}
+
+.dept-section.active {
+  display: block;
+}
+
+.luxury-header {
+  max-width: 1200px;
+  margin: 50px auto 0;
+  padding: 30px 40px;
+  background: #fff;
+  border-right: 8px solid var(--gold);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.luxury-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top left, rgba(195, 158, 49, 0.03) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.header-main {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  position: relative;
+  z-index: 2;
+}
+
+.dept-icon {
+  font-size: 3.2rem;
+  background: #fdf8ed;
+  width: 85px;
+  height: 85px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  box-shadow: inset 0 0 10px rgba(195, 158, 49, 0.05);
+}
+
+.luxury-title {
+  color: var(--gold-dark);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.dept-hours {
+  color: var(--muted-text);
+  font-size: 1.05rem;
+  margin: 0;
+  background: #f9f9f9;
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 50px;
+  border: 1px solid #eee;
+}
+
+.dept-hours i {
+  color: var(--gold);
+  margin-left: 5px;
+}
+
+.dept-doctor {
+  color: var(--gold-dark);
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 12px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dept-doctor i {
+  color: var(--gold);
+}
+
+/* ═══════════════════════════════════
+   💆 SERVICES LIST & CARDS
+═══════════════════════════════════ */
+.services-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
+}
+
+.service-card {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  background: #fff;
+  border-radius: 25px;
+  box-shadow: var(--shadow);
+  padding: 30px;
+  transition: var(--transition);
+  border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.service-card:nth-child(even) {
+  flex-direction: row-reverse;
+  background: #fafafc;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  border-color: rgba(195, 158, 49, 0.15);
+}
+
+.service-card img {
+  width: 45%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.service-content {
+  flex: 1;
+}
+
+.service-content h2 {
+  color: var(--gold-dark);
+  margin-bottom: 18px;
+  font-size: 2rem;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+}
+
+.service-content h2::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  right: 0;
+  width: 50px;
+  height: 3px;
+  background: var(--gold-gradient);
+  border-radius: 10px;
+}
+
+.service-content p {
+  color: var(--muted-text);
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+  line-height: 2;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gold-gradient);
+  color: #fff;
+  padding: 14px 35px;
+  border-radius: 50px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+  box-shadow: 0 8px 20px rgba(195, 158, 49, 0.25);
+  font-size: 1.05rem;
+}
+
+.btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(195, 158, 49, 0.35);
+}
+
+/* 📱 Responsive */
+@media (max-width: 900px) {
+  .hero-text h1 {
+    font-size: 2.6rem;
+  }
+
+  .dept-tabs {
+    gap: 8px;
+  }
+
+  .dept-tab {
+    padding: 10px 18px;
+    font-size: 0.85rem;
+  }
+
+  .tab-icon {
+    font-size: 1.1rem;
+  }
+
+  .service-card {
+    flex-direction: column !important;
+    padding: 20px;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .service-card img {
+    width: 100%;
+    height: 280px;
+  }
+
+  .service-content h2::after {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+
+  .luxury-header {
+    padding: 25px 20px;
+    text-align: center;
+  }
+
+  .header-main {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .dept-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 2.5rem;
+  }
+
+  .luxury-title {
+    font-size: 1.7rem;
+  }
+
+  .dept-hours {
+    font-size: 0.9rem;
+    padding: 4px 12px;
+  }
+}
+
+/* 🦶 Footer */
+.footer {
+  text-align: center;
+  padding: 50px 20px;
+  background: #fff;
+  color: var(--muted-text);
+  border-top: 1px solid #eee;
+}

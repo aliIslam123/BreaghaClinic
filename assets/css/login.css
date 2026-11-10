@@ -1,0 +1,132 @@
+
+    /* Modern login styles - full redesign */
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+    :root{
+      --bg-1: #fffaf6;
+      --bg-2: #fbf7f2;
+      --card-bg: #ffffff;
+      --primary: #C39E31;
+      --primary-600: #a38227;
+      --text: #2b2b2b;
+      --muted: #777777;
+      --radius: 14px;
+      --shadow-1: 0 10px 30px rgba(16,24,40,0.08);
+      --shadow-2: 0 6px 18px rgba(16,24,40,0.06);
+      --input-border: rgba(0,0,0,0.08);
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(180deg,var(--bg-1), var(--bg-2));
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Centering wrapper to allow subtle background decoration */
+    .login-wrapper{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 14px;
+    }
+
+    .login-box{
+      /* responsive fit: no wider than 300px, and fit viewport on small screens */
+      width: min(300px, 90vw);
+      margin: 0 auto;
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), var(--card-bg));
+      border-radius:10px;
+      padding:12px 12px; /* tighter padding for compact look */
+      box-shadow:var(--shadow-1);
+      border:1px solid rgba(0,0,0,0.04);
+      position:relative;
+      overflow:visible;
+    }
+
+    .login-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;justify-content:center}
+    .login-top img{width:36px;height:auto;display:block}
+    .login-top h2{font-size:1rem;margin:0;color:var(--text);font-weight:700}
+    .login-sub{color:var(--muted);font-size:0.9rem;margin-top:6px;text-align:center}
+
+    .form-group{margin:12px 0;text-align:right}
+    .form-group label{display:block;margin-bottom:6px;color:var(--muted);font-weight:600}
+    .form-group input{
+      width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--input-border);
+      font-size:1rem;background:linear-gradient(180deg,#ffffff,#fbfbfb);
+      transition:box-shadow .18s ease,border-color .18s ease,transform .12s ease;
+      direction: rtl; text-align: right; /* better for Arabic input alignment */
+    }
+
+    /* Password field container and toggle */
+    .password-field{position:relative;display:block}
+    .pw-toggle{
+      position:absolute;
+      left:10px; /* places the button on the left side in RTL layout */
+      top:50%;
+      transform:translateY(-50%);
+      border:0;background:transparent;padding:6px;display:flex;align-items:center;justify-content:center;
+      cursor:pointer;color:var(--muted);border-radius:8px;transition:background .12s ease, color .12s ease;
+    }
+    .pw-toggle:hover{background:rgba(0,0,0,0.04);color:var(--text)}
+    .pw-toggle:focus{outline:none;box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+    .pw-toggle svg{display:block}
+    .pw-toggle .eye-closed{display:none}
+    .pw-toggle.show .eye-open{display:none}
+    .pw-toggle.show .eye-closed{display:block}
+
+    /* when password is visible, slightly dim the input for clarity */
+    .pw-toggle.show + input,
+    .password-field .pw-toggle.show ~ input { opacity: 1; }
+    .form-group input:focus{outline:none;box-shadow:var(--shadow-2);border-color:var(--primary-600)}
+
+    .login-actions{margin-top:14px}
+    .login-btn{
+      width:100%;display:inline-block;padding:10px 14px;border-radius:999px;border:none;
+      background:linear-gradient(90deg,var(--primary), #E6BC57);color:#fff;font-weight:700;font-size:0.98rem;cursor:pointer;
+      box-shadow:0 8px 24px rgba(195,158,49,0.12);transition:transform .18s ease,box-shadow .18s ease,opacity .12s ease;
+    }
+    .login-btn:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(195,158,49,0.14)}
+
+    .extra-btn{display:block;text-align:center;margin-top:10px;padding:8px;border-radius:999px;border:1px solid rgba(0,0,0,0.06);color:var(--muted);text-decoration:none}
+    .extra-btn:hover{background:rgba(0,0,0,0.02)}
+
+    .error{margin-top:12px;color:#c0392b;background:rgba(192,57,43,0.06);padding:10px;border-radius:8px;font-weight:600}
+
+    /* Decorative accent: thin golden top stripe (smaller to match reduced card) */
+    .login-box::before{
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 32%;
+      right: 32%;
+      height: 4px;
+      background: linear-gradient(90deg,var(--primary), #E6BC57);
+      border-radius: 6px;
+      box-shadow: 0 6px 18px rgba(195,158,49,0.06);
+    }
+
+    /* Mobile tweaks: make the card even more compact on small screens */
+    @media (max-width:480px){
+      /* On mobile make the card more prominent and comfortable to use */
+      .login-wrapper{align-items:center;padding-top:5vh;padding-bottom:5vh}
+      .login-box{
+        /* allow a larger card on phones while keeping comfortable margins */
+        width: min(380px, 98vw);
+        padding:20px 18px;
+      }
+      .login-top img{width:48px}
+      .login-top h2{font-size:1.25rem}
+      .form-group input{padding:14px;font-size:1.04rem}
+      .login-btn{padding:14px;font-size:1.04rem}
+      .login-box::before{left:16%;right:16%;height:5px}
+    }
+
+    /* Utility: subtle footer note inside box */
+    .login-note{margin-top:14px;font-size:0.9rem;color:var(--muted);text-align:center}
+

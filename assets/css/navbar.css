@@ -1,0 +1,299 @@
+/* ================================================
+   navbar.css — شريط التنقل الموحّد
+   يُستخدم في جميع صفحات عيادة براجيا
+   تصميم: Glassmorphism فاخر + لمسة ذهبية
+================================================ */
+
+/* --------------------------------
+   المتغيرات الخاصة بالـ Navbar
+-------------------------------- */
+:root {
+    --nav-gold: #C39E31;
+    --nav-gold-light: #b8850f;
+    --nav-bg: rgba(200, 205, 210, 0.30);
+    --nav-bg-scrolled: rgba(180, 185, 192, 0.65);
+    --nav-border: rgba(100, 110, 120, 0.25);
+    --nav-link-color: #1a1a2e;
+    --nav-height: 72px;
+}
+
+/* --------------------------------
+   الـ Nav الرئيسي
+-------------------------------- */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 50px;
+    z-index: 1000;
+
+    /* Frosted Glass — رصاصي ضبابي فاخر */
+    background: var(--nav-bg);
+    -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(1.08);
+    backdrop-filter: blur(28px) saturate(180%) brightness(1.08);
+
+    /* الحدود الذهبية الرفيعة في الأسفل */
+    border-bottom: 1px solid var(--nav-border);
+
+    /* الظل */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+
+    /* انتقال سلس عند الـ scroll */
+    transition: background 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease,
+        height 0.25s ease;
+}
+
+/* حالة الـ Scroll */
+.navbar.scrolled {
+    background: var(--nav-bg-scrolled);
+    -webkit-backdrop-filter: blur(32px) saturate(200%) brightness(1.05);
+    backdrop-filter: blur(32px) saturate(200%) brightness(1.05);
+    box-shadow: 0 6px 40px rgba(0, 0, 0, 0.18);
+    border-bottom: 1px solid rgba(195, 158, 49, 0.40);
+    height: 62px;
+}
+
+/* --------------------------------
+   الـ Logo
+-------------------------------- */
+.navbar .logo {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--nav-gold);
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    font-family: 'Cairo', sans-serif;
+
+    /* توهّج ذهبي خفيف */
+    text-shadow:
+        0 0 18px rgba(195, 158, 49, 0.35),
+        0 1px 0 rgba(0, 0, 0, 0.3);
+
+    transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+.navbar .logo:hover {
+    color: var(--nav-gold-light);
+    text-shadow:
+        0 0 28px rgba(195, 158, 49, 0.60),
+        0 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* --------------------------------
+   قائمة الروابط
+-------------------------------- */
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    position: relative;
+}
+
+.nav-links a {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--nav-link-color);
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-family: 'Cairo', sans-serif;
+    padding: 6px 14px;
+    border-radius: 6px;
+    position: relative;
+    transition: color 0.25s ease, background 0.25s ease;
+}
+
+/* خط ذهبي متحرك تحت الرابط عند hover */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    /* RTL: يبدأ من المنتصف */
+    left: 50%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--nav-gold), var(--nav-gold-light));
+    border-radius: 2px;
+    transition: right 0.28s ease, left 0.28s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    right: 6px;
+    left: 6px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--nav-gold);
+}
+
+/* --------------------------------
+   زر "احجز الآن" — مميّز بإطار ذهبي
+-------------------------------- */
+.nav-links li:last-child a {
+    color: var(--nav-gold);
+    border: 1.5px solid var(--nav-gold);
+    border-radius: 50px;
+    padding: 6px 20px;
+    background: rgba(195, 158, 49, 0.10);
+    font-weight: 700;
+    transition: background 0.28s ease,
+        color 0.28s ease,
+        box-shadow 0.28s ease,
+        transform 0.22s ease;
+}
+
+.nav-links li:last-child a:hover {
+    background: var(--nav-gold);
+    color: #ffffff;
+    box-shadow: 0 0 22px rgba(195, 158, 49, 0.45);
+    transform: translateY(-2px);
+}
+
+/* لا نريد الخط السفلي على زر الحجز */
+.nav-links li:last-child a::after {
+    display: none;
+}
+
+/* --------------------------------
+   زر الهامبرغر (Hamburger) — موبايل
+-------------------------------- */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(195, 158, 49, 0.20);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    padding: 0;
+}
+
+.nav-toggle:hover {
+    background: rgba(195, 158, 49, 0.12);
+}
+
+/* الثلاثة خطوط */
+.nav-toggle::before,
+.nav-toggle::after {
+    content: '';
+}
+
+.nav-toggle::before,
+.nav-toggle::after,
+.nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--nav-gold);
+    border-radius: 3px;
+    transition: transform 0.28s ease, opacity 0.28s ease, top 0.28s ease;
+}
+
+/* حالة مفتوحة (X) */
+.nav-toggle.open {
+    background: rgba(195, 158, 49, 0.15);
+}
+
+.nav-toggle.open::before {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle.open::after {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+.nav-toggle.open span {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+/* --------------------------------
+   Responsive — الموبايل
+-------------------------------- */
+@media (max-width: 900px) {
+    .navbar {
+        padding: 0 20px;
+        height: 64px;
+        /* نجعل الـ navbar قابلاً للامتداد رأسياً */
+        flex-wrap: wrap;
+        align-items: center;
+        /* لا نحدد height عند الموبايل */
+        height: auto;
+        min-height: 64px;
+        padding: 12px 20px;
+    }
+
+    .navbar.scrolled {
+        height: auto;
+        min-height: 58px;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    .nav-links {
+        /* مخبأة افتراضياً */
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0;
+        overflow: hidden;
+        max-height: 0;
+        padding: 0 4px;
+        transition: max-height 0.35s ease, padding 0.25s ease;
+    }
+
+    .nav-links.open {
+        max-height: 360px;
+        padding: 10px 4px 16px;
+    }
+
+    .nav-links li {
+        width: 100%;
+        border-bottom: 1px solid rgba(195, 158, 49, 0.08);
+    }
+
+    .nav-links li:last-child {
+        border-bottom: none;
+        margin-top: 8px;
+    }
+
+    .nav-links a {
+        display: block;
+        width: 100%;
+        text-align: right;
+        padding: 10px 8px;
+        font-size: 1.1rem;
+    }
+
+    .nav-links li:last-child a {
+        text-align: center;
+        border-radius: 50px;
+    }
+}
+
+@media (max-width: 500px) {
+    .navbar .logo {
+        font-size: 1.5rem;
+    }
+}
