@@ -48,7 +48,7 @@ header('Content-Type: text/html; charset=utf-8');
   <?php include 'seo-schema.php'; ?>
 </head>
 
-<body>
+<body class="offers-page">
   <?php
   require_once 'config/connection.php';
   // Load offers from DB
@@ -71,6 +71,7 @@ header('Content-Type: text/html; charset=utf-8');
           'giftLabel' => $o['gift_label'] ?? '',
       ];
     }
+  $featured_offer = $offers[0] ?? null;
   ?>
 
   <nav class="navbar">
@@ -86,15 +87,47 @@ header('Content-Type: text/html; charset=utf-8');
   </nav>
 
   <header class="offers-hero">
-    <div class="offers-badge">
-      <i class="fas fa-fire"></i>
-      عروض لفترة محدودة
+    <div class="offers-hero-inner">
+      <div class="offers-hero-copy">
+        <p class="offers-kicker">Brèagha Clinic <span aria-hidden="true"></span> العروض</p>
+        <h1>عنايتك، <span>بأسعار واضحة</span></h1>
+        <p>باقات للعناية بالبشرة والشعر والليزر والتجميل بالحقن، مع تفاصيل كل جلسة وسعرها قبل الحجز.</p>
+        <a class="offers-hero-link" href="#filters">استعرضي العروض <i class="fas fa-arrow-left" aria-hidden="true"></i></a>
+      </div>
+      <?php if ($featured_offer): ?>
+        <article class="offers-featured-card" aria-label="عينة من العروض المتاحة">
+          <div class="offers-featured-top">
+            <span>عينة من العروض</span>
+            <span><?= count($offers) ?> عروض</span>
+          </div>
+          <span class="offers-featured-rule" aria-hidden="true"></span>
+          <span class="offers-featured-category"><?= htmlspecialchars($featured_offer['category'], ENT_QUOTES, 'UTF-8') ?></span>
+          <h2><?= htmlspecialchars($featured_offer['name'], ENT_QUOTES, 'UTF-8') ?></h2>
+          <?php if (!empty($featured_offer['details'])): ?>
+            <p><?= htmlspecialchars($featured_offer['details'], ENT_QUOTES, 'UTF-8') ?></p>
+          <?php endif; ?>
+          <?php if (!empty($featured_offer['gift_label'])): ?>
+            <span class="offers-featured-gift"><i class="fas fa-gift" aria-hidden="true"></i><?= htmlspecialchars($featured_offer['gift_label'], ENT_QUOTES, 'UTF-8') ?></span>
+          <?php endif; ?>
+          <div class="offers-featured-price">
+            <span class="offers-featured-current"><?= number_format((float)$featured_offer['price'], 0) ?> <small>ج.م</small></span>
+            <?php if ($featured_offer['original_price'] !== null && (float)$featured_offer['original_price'] > 0): ?>
+              <span class="offers-featured-old"><?= number_format((float)$featured_offer['original_price'], 0) ?> ج.م</span>
+            <?php endif; ?>
+          </div>
+        </article>
+      <?php endif; ?>
     </div>
-    <h1>العروض <span>الخاصة</span></h1>
-    <p>أسعار استثنائية على أرقى خدمات التجميل والليزر — اختاري الخدمة واضغطي احجزي</p>
   </header>
 
   <main class="offers-container">
+    <div class="offers-section-head">
+      <div>
+        <p class="offers-section-kicker">العناية التي تبحثين عنها</p>
+        <h2>اختاري القسم</h2>
+      </div>
+      <p>تصفحي الباقات المتاحة واختاري ما يناسبك</p>
+    </div>
     <div class="offers-filters" id="filters"></div>
     <div id="offers-grid" class="offers-grid" aria-live="polite"></div>
     <div id="empty" class="offers-empty" style="display:none">لا توجد عروض في الفئة المختارة.</div>
@@ -117,9 +150,12 @@ header('Content-Type: text/html; charset=utf-8');
       const btn = document.createElement('button');
       btn.className = 'filter-btn' + (cat === 'الكل' ? ' active' : '');
       btn.textContent = cat;
+      btn.setAttribute('aria-pressed', cat === 'الكل' ? 'true' : 'false');
       btn.addEventListener('click', () => {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.filter-btn').forEach(b => b.setAttribute('aria-pressed', 'false'));
         btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
         renderGrid(cat === 'الكل' ? null : cat);
       });
       filtersEl.appendChild(btn);
@@ -161,7 +197,13 @@ header('Content-Type: text/html; charset=utf-8');
           if (s.giftLabel) {
             const gift = document.createElement('span');
             gift.className = 'offer-gift';
-            gift.textContent = s.giftLabel;
+            const giftIcon = document.createElement('i');
+            giftIcon.className = 'fas fa-gift';
+            giftIcon.setAttribute('aria-hidden', 'true');
+            gift.appendChild(giftIcon);
+            const giftText = document.createElement('span');
+            giftText.textContent = s.giftLabel;
+            gift.appendChild(giftText);
             description.appendChild(gift);
           }
         }
@@ -170,9 +212,10 @@ header('Content-Type: text/html; charset=utf-8');
         priceSec.className = 'offer-price-section';
         const priceHTML = `${s.starting ? 'ابتداءً من ' : ''}${formatPrice(s.price)} ج.م`;
         const oldHTML = s.originalPrice !== null && s.originalPrice > 0
-          ? `<span class='offer-old-price'>${formatPrice(s.originalPrice)} ج.م</span>`
+          ? `<span class='offer-old-price'><span class='offer-old-label'>قبل العرض</span><span class='offer-old-value'>${formatPrice(s.originalPrice)} ج.م</span></span>`
           : '';
-        priceSec.innerHTML = `<div class='offer-price'>${priceHTML}</div>${oldHTML}`;
+        const priceLabel = s.originalPrice !== null && s.originalPrice > 0 ? 'سعر العرض' : 'السعر';
+        priceSec.innerHTML = `<div class='offer-current-price'><span class='offer-price-label'>${priceLabel}</span><div class='offer-price'>${priceHTML}</div></div>${oldHTML}`;
 
         const divider = document.createElement('div');
         divider.className = 'offer-divider';
