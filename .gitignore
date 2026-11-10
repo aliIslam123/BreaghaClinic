@@ -1,7 +1,6 @@
 # Runtime secrets and local configuration
-/config/connection.php
 /config/connection.local.php
-/config/telegram-config.php
+/config/telegram-config.local.php
 /.env
 /.env.*
 !.env.example

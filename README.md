@@ -8,7 +8,7 @@ PHP website for Brèagha Clinic.
 
 ## Production configuration
 
-`config/connection.php` and `config/telegram-config.php` contain production credentials and are intentionally excluded from Git. Keep the production copies safely configured on Hostinger. Before deploying to `public_html`, make sure the live database configuration remains available to the app; Hostinger deployment can replace files in the target directory.
+Database and Telegram credentials are never committed. For local work, keep them in ignored files named `config/connection.local.php` and `config/telegram-config.local.php`. On Hostinger, store the production copies outside the public document root at `../private/connection.php` and `../private/telegram-config.php` relative to `public_html`. The tracked files in `config/` load those private settings. Create or copy these production files before deploying to `public_html`.
 
 ## Automatic deployment
 
