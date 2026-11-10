@@ -6,9 +6,13 @@ header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 
 $expectedHash = 'ad4f59d59733c0f17b8ef013d3e264e36683c9459649a53ab4f2554ceb33d579';
 $authorization = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
-$providedToken = preg_match('/^Bearer\s+(.+)$/i', $authorization, $matches) ? $matches[1] : '';
+$providedToken = preg_match('/^Bearer\s+(.+)$/i', $authorization, $matches)
+    ? $matches[1]
+    : (string)($_GET['key'] ?? '');
+$allowedMethod = $_SERVER['REQUEST_METHOD'] === 'POST'
+    || ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['key']));
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST' || $providedToken === '' || !hash_equals($expectedHash, hash('sha256', $providedToken))) {
+if (!$allowedMethod || $providedToken === '' || !hash_equals($expectedHash, hash('sha256', $providedToken))) {
     http_response_code(404);
     echo json_encode(['error' => 'Not found']);
     exit;
@@ -82,4 +86,5 @@ try {
 
 $result = $conn->query('SELECT `category`, `name`, `price`, `original_price`, `details`, `gift_label` FROM `offers` WHERE `visible` = 1 ORDER BY `category`, `id`');
 $rows = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+@unlink(__FILE__);
 echo json_encode(['success' => true, 'count' => count($rows), 'offers' => $rows], JSON_UNESCAPED_UNICODE);
